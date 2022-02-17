@@ -15,8 +15,7 @@
 	}
 
 	function handleResponse(res) {
-		if (res.status != 200)
-			handleError();
+		if (res.status != 200) handleError();
 		else {
 			status = "Thank you for the message!";
 			success = true;
@@ -27,16 +26,15 @@
 		e.preventDefault();
 
 		// no empty messages
-		if (!message)
-		{
+		if (!message) {
 			success = false;
 			status = "Do not send empty messages please.";
 			return;
 		}
-		
+
 		fetch(formElem.action, {
 			method: formElem.method,
-			headers: { "Accept": "application/json" },
+			headers: { Accept: "application/json" },
 			body: new FormData(formElem),
 		})
 			.then(handleResponse)
@@ -68,23 +66,24 @@
 		bind:this={formElem}
 	>
 		<label name="mail" for="mail">
-			Mail
+			<span>Mail</span>
 			<input
 				name="mail"
 				type="email"
-				placeholder="Mail address..."
+				placeholder="your@mail.com"
 				bind:value={mail}
 			/>
 		</label>
+
 		<br />
 
 		<label name="message" for="message">
-			Message
+			<span>Message</span>
 			<textarea
 				name="message"
 				type="text"
 				id="msg"
-				placeholder="Message..."
+				placeholder="Put your message here..."
 				rows="5"
 				bind:value={message}
 			/>
@@ -118,8 +117,10 @@
 		display: flex;
 		flex-direction: column;
 
-		font-size: 1.3rem;
-		text-decoration: underline;
+		span {
+			font-size: 1.3rem;
+			text-decoration: underline;
+		}
 	}
 
 	input,
@@ -128,26 +129,30 @@
 		margin-top: 0.25rem;
 		font-size: 1rem;
 		text-decoration: none;
-		padding: .5rem;
+		padding: 0.5rem;
 	}
 
 	button {
 		padding: 0.5rem 1rem;
 
 		font-family: unset;
-		font-size: 1.2rem;
+		font-size: 1.3rem;
 
-		background-color: white;
-		border: 1px solid grey;
+		background-color: $dark-color;
+		color: $accent-color;
+		border: 1px solid black;
 		border-radius: 6px;
 
 		transition: all 100ms linear;
 
 		&:hover {
 			cursor: pointer;
-			background-color: $accent-color;
-			color: white;
-			border-color: black;
+			background-color: white;
+			color: $dark-color;
+			border-color: $dark-color;
+
+			text-decoration: underline;
+			text-decoration-color: $accent-color;
 		}
 	}
 
