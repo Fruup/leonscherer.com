@@ -1,9 +1,10 @@
 <script lang="ts">
 	export let href = "/";
+	export let icon = undefined;
 </script>
 
 <a {href} target="_blank">
-	<slot />
+	<svelte:component this={icon} />
 </a>
 
 <style lang="scss">
@@ -24,5 +25,13 @@
 
 		border-radius: 999px;
 		width: var(--link-height);
+	}
+
+	:global(a > svg > path) {
+		transition: fill 100ms linear;
+	}
+
+	:global(a:hover > svg > path) {
+		fill: $accent-color;
 	}
 </style>

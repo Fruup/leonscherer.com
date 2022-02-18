@@ -1,6 +1,9 @@
 <script>
 	import Link from "$lib/components/Link.svelte";
 	import SocialLink from "$lib/components/SocialLink.svelte";
+	import IconGitHub from "./icons/IconGitHub.svelte";
+	import IconInstagram from "./icons/IconInstagram.svelte";
+	import IconTwitter from "./icons/IconTwitter.svelte";
 </script>
 
 <header>
@@ -14,12 +17,12 @@
 		</div>
 
 		<div class="social">
-			<SocialLink href="https://twitter.com/leon_stuff">
-				<img src="/svg/twitter-logo.svg" width="50%" alt="T" />
-			</SocialLink>
-			<SocialLink href="https://instagram.com/leonscherersan">
-				<img src="/svg/instagram-logo.svg" width="50%" alt="I" />
-			</SocialLink>
+			<SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} />
+			<SocialLink
+				href="https://instagram.com/leonscherersan"
+				icon={IconInstagram}
+			/>
+			<SocialLink href="https://github.com/Fruup" icon={IconGitHub} />
 		</div>
 	</nav>
 </header>
