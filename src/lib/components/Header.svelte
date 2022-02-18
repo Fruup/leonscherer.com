@@ -1,9 +1,20 @@
 <script>
+	import { page } from "$app/stores";
+
 	import Link from "$lib/components/Link.svelte";
 	import SocialLink from "$lib/components/SocialLink.svelte";
+	import { onMount } from "svelte";
 	import IconGitHub from "./icons/IconGitHub.svelte";
 	import IconInstagram from "./icons/IconInstagram.svelte";
 	import IconTwitter from "./icons/IconTwitter.svelte";
+
+	$: blogUrl = $page.url.pathname.startsWith("/blog")
+		? "/blog"
+		: typeof localStorage !== "undefined"
+		? (localStorage.getItem("lastBlogPost") || "/blog")
+		: "/blog";
+
+	// var blogUrl = "/blog";
 </script>
 
 <header>
@@ -11,7 +22,7 @@
 		<div class="pages">
 			<Link href="/portfolio">Portfolio</Link>
 			<Link href="/music">Music</Link>
-			<!-- <Link href="/blog">Blog</Link> -->
+			<Link href={blogUrl}>Blog</Link>
 			<Link href="/about">About</Link>
 			<Link href="/contact">Contact</Link>
 		</div>

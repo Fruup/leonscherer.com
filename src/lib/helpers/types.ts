@@ -41,3 +41,11 @@ export declare type TrackMeta = {
 };
 
 export declare type MetaResponseBody = TrackMeta[];
+
+export declare type BlogMeta = {
+	slug: string;
+	title: string;
+	excerpt: string;
+	tags: string[];
+	release: Date,
+};

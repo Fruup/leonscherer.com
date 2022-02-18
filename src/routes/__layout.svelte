@@ -34,6 +34,11 @@
 
 <script lang="ts">
 	import Header from "$lib/components/Header.svelte";
+	import { onMount } from "svelte";
+
+	onMount(() => {
+		localStorage.removeItem("lastBlogPost");
+	});
 
 	// lazy load audio player component
 	const AudioPlayer = import("$lib/components/AudioPlayer.svelte").then(
