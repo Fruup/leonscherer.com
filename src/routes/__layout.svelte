@@ -22,15 +22,16 @@
 		initAudio(
 			data.map(
 				(t, i) =>
-					<TrackDescription>{
+					({
 						...t,
 						//coverUrl: t.coverApproved ? (t.coverUrl || `${url}/${t.id}.jpg`) : `${url}/default.jpg`,
 						coverUrl: t.coverUrl || `${url}/${t.id}.jpg`,
 						howl: new Howl({
 							preload: i === currentTrackIndex,
 							src: `${url}/${t.id}.mp3`,
+							//html5: true,
 						}),
-					}
+					} as TrackDescription)
 			),
 			currentTrackIndex
 		);
