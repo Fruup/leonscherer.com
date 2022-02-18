@@ -10,7 +10,10 @@ function createProgressStore() {
 			const currentTrack = getCurrentTrack();
 			if (currentTrack) {
 				const howl = currentTrack.howl;
-				if (howl) set(<number>howl.seek() / howl.duration());
+				if (howl) {
+					const f = <number>howl.seek() / howl.duration();
+					if (!isNaN(f)) set(f);
+				}
 			}
 		}, 100);
 
