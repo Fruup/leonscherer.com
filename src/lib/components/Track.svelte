@@ -1,38 +1,19 @@
 <script lang="ts">
-	import { loadAudio, setCurrentTrackById } from "$lib/audio";
-	import type { TrackDescription } from "$lib/helpers/types";
-
-	// preload track on mouse hover
-	function handleMouseEnter() {
-		if (track.howl.state() === "unloaded") {
-			// preload track after some amount of time
-			clearTimeout(timer);
-			timer = setTimeout(() => loadAudio(track), TIMEOUT);
-		}
-	}
-
-	// timer
-	var timer: NodeJS.Timeout;
-	const TIMEOUT = 500;
+	import { setCurrentTrackById } from "$lib/audio";
+	import type { TrackMeta } from "$lib/helpers/types";
 
 	// props
-	export let track: TrackDescription;
-
-	// $: coverUrl = track.coverApproved ?
-	// 	`/covers/${track.coverUrl || track.id + ".jpg"}` :
-	// 	'/covers/default.jpg';
-
-	$: coverUrl = track.coverUrl;
+	export let track: TrackMeta;
 </script>
 
 <div class="track">
 	<div class="button-container">
-		<button
-			on:click={() => setCurrentTrackById(track.id, true)}
-			on:mouseenter={handleMouseEnter}
-			on:mouseleave={() => clearTimeout(timer)}
-		>
-			<img src={coverUrl} alt={`${track.title} cover image`} width="100%" />
+		<button on:click={() => setCurrentTrackById(track.id, true)}>
+			<img
+				src={track.coverUrl}
+				alt={`${track.title} cover image`}
+				width="100%"
+			/>
 		</button>
 	</div>
 </div>

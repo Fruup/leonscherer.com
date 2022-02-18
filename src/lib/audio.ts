@@ -1,13 +1,20 @@
 import { browser } from "$app/env";
+import { Howl } from "howler";
 import { writable } from "svelte/store";
-import type { TrackDescription } from "./helpers/types";
+import type { TrackMeta } from "./helpers/types";
+
+// --------------------------------------------------------------------
+// config
+
+export const MUSIC_CONTENT_URL =
+	"https://raw.githubusercontent.com/Fruup/leonscherer.com/master/content/music";
 
 // --------------------------------------------------------------------
 // store
 
 // audio store type definition
 declare type AudioStore = {
-	tracks: TrackDescription[];
+	tracks: TrackMeta[];
 	queue: number[];
 	currentTrackIndex: number;
 	playing: boolean;
@@ -32,6 +39,8 @@ function createAudioStore() {
 
 export const audioStore = createAudioStore();
 
+export var howlInstance: Howl = undefined;
+
 // --------------------------------------------------------------------
 // private functions
 
@@ -43,14 +52,13 @@ function startPlayback() {
 	audioStoreData.playing = true;
 
 	// start howl
-	const howl = getCurrentTrack().howl;
-	howl.play();
+	howlInstance.play();
 
 	// update store
 	update();
 }
 
-function handleTrackEnd(index: number) {
+function handleTrackEnd() {
 	// stop playing
 	audioStoreData.wasPlaying = audioStoreData.playing;
 	audioStoreData.playing = false;
@@ -96,15 +104,13 @@ function getRandomQueue() {
 // --------------------------------------------------------------------
 // global functions
 
-export const initAudio = (tracks: TrackDescription[], currentTrackIndex: number) => {
+export const initAudio = (tracks: TrackMeta[], currentTrackIndex: number) => {
 	// set tracks
 	audioStoreData.tracks = tracks;
 	audioStoreData.currentTrackIndex = currentTrackIndex;
 
 	// hook up events
-	audioStoreData.tracks.forEach((track, i) => {
-		track.howl.on('end', () => handleTrackEnd(i));
-	});
+	//howlInstance.on('end', () => handleTrackEnd(currentTrackIndex));
 
 	// generate random queue
 	audioStoreData.queue = getRandomQueue();
@@ -121,14 +127,20 @@ export function getCurrentTrack(store?: AudioStore) {
 		return store.tracks[store.currentTrackIndex];
 };
 
-export function loadAudio(track: TrackDescription) {
+export function loadAudio(track: TrackMeta) {
 	return new Promise<void>((resolve, reject) => {
-		// hook up events
-		track.howl.on('load', resolve);
-		track.howl.on('loaderror', (soundId, error) => reject(error));
+		// unload
+		if (howlInstance)
+			howlInstance.unload();
 
-		// start loading
-		track.howl.load();
+		// create new howl instance
+		howlInstance = new Howl({
+			src: `${MUSIC_CONTENT_URL}/${track.id}.mp3`,
+			html5: true,
+			onload: () => resolve(),
+			onloaderror: (soundId, error) => reject(error),
+			onend: handleTrackEnd,
+		});
 	});
 }
 
@@ -137,10 +149,10 @@ export function togglePlayback() {
 	audioStoreData.wasPlaying = audioStoreData.playing;
 	audioStoreData.playing = !audioStoreData.playing;
 
-	const howl = getCurrentTrack().howl;
+	//const howl = getCurrentTrack().howl;
 
-	if (audioStoreData.playing) howl.play();
-	else howl.pause();
+	if (audioStoreData.playing) howlInstance.play();
+	else howlInstance.pause();
 
 	// update store
 	update();
@@ -167,7 +179,9 @@ export async function setCurrentTrackByIndex(index: number, play?: boolean) {
 	audioStoreData.currentTrackIndex = index;
 
 	// stop all tracks
-	audioStoreData.tracks.forEach(t => t.howl.stop());
+	if (howlInstance)
+		howlInstance.stop();
+	//audioStoreData.tracks.forEach(t => t.howl.stop());
 
 	// update store
 	update();

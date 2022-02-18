@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getCurrentTrack } from "$lib/audio";
+import { getCurrentTrack, howlInstance } from "$lib/audio";
 
 function createProgressStore() {
 	// create store
@@ -7,13 +7,9 @@ function createProgressStore() {
 		// set interval
 		const interval = setInterval(() => {
 			// seek currently playing track
-			const currentTrack = getCurrentTrack();
-			if (currentTrack) {
-				const howl = currentTrack.howl;
-				if (howl) {
-					const f = <number>howl.seek() / howl.duration();
-					if (!isNaN(f)) set(f);
-				}
+			if (howlInstance) {
+				const f = <number>howlInstance.seek() / howlInstance.duration();
+				set(isNaN(f) ? 0 : f);
 			}
 		}, 100);
 
@@ -28,11 +24,8 @@ function createProgressStore() {
 			store.set(value);
 
 			// seek currently playing track
-			const currentTrack = getCurrentTrack();
-			if (currentTrack) {
-				const howl = currentTrack.howl;
-				if (howl) howl.seek(value * howl.duration());
-			}
+			if (howlInstance)
+				howlInstance.seek(value * howlInstance.duration());
 		},
 	};
 }

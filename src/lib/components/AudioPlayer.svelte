@@ -8,7 +8,7 @@
 	} from "$lib/audio";
 	import { fade } from "svelte/transition";
 	import PlaybackSlider from "$lib/components/PlaybackSlider.svelte";
-	import type { TrackDescription } from "$lib/helpers/types";
+	import type { TrackMeta } from "$lib/helpers/types";
 	import { onMount } from "svelte";
 	import PlayIcon from "$lib/icons/PlayIcon.svelte";
 
@@ -37,7 +37,7 @@
 	export let ready = false;
 	export let hidden = true;
 
-	export let currentTrack: Partial<TrackDescription> = undefined;
+	export let currentTrack: Partial<TrackMeta> = undefined;
 
 	// computed
 	$: showCoverArtist =
@@ -56,6 +56,7 @@
 	on:mouseenter={() => hidden && (hidden = false)}
 	on:click={() => hidden && (hidden = false)}
 	class:hidden
+	class:ready
 >
 	{#if ready}
 		<div class="content" transition:fade>
@@ -306,6 +307,10 @@
 
 		&.hidden {
 			transform: translateY(calc(100% - $hidden-player-height));
+		}
+
+		&:not(.ready) {
+			transform: translateY(100%);
 		}
 	}
 </style>

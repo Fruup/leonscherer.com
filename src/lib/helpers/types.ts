@@ -1,5 +1,3 @@
-import type { Howl } from "howler";
-
 export declare type GitHubApiResponse = {
 	name: string;
 	path: string;
@@ -43,7 +41,3 @@ export declare type TrackMeta = {
 };
 
 export declare type MetaResponseBody = TrackMeta[];
-
-export type TrackDescription = TrackMeta & {
-	howl?: Howl;
-};

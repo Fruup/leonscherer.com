@@ -1,8 +1,7 @@
 <script lang="ts" context="module">
 	import type { Load } from "@sveltejs/kit";
-	import { initAudio } from "$lib/audio";
-	import type { MetaResponseBody, TrackDescription } from "$lib/helpers/types";
-	import { Howl } from "howler";
+	import { initAudio, MUSIC_CONTENT_URL } from "$lib/audio";
+	import type { MetaResponseBody, TrackMeta } from "$lib/helpers/types";
 	import { browser } from "$app/env";
 
 	export const load: Load = async ({ fetch }) => {
@@ -16,22 +15,14 @@
 			: data.length - 1;
 
 		// init audio manager
-		const url =
-			"https://raw.githubusercontent.com/Fruup/leonscherer.com/master/content/music";
-
 		initAudio(
 			data.map(
 				(t, i) =>
 					({
 						...t,
 						//coverUrl: t.coverApproved ? (t.coverUrl || `${url}/${t.id}.jpg`) : `${url}/default.jpg`,
-						coverUrl: t.coverUrl || `${url}/${t.id}.jpg`,
-						howl: new Howl({
-							preload: i === currentTrackIndex,
-							src: `${url}/${t.id}.mp3`,
-							//html5: true,
-						}),
-					} as TrackDescription)
+						coverUrl: t.coverUrl || `${MUSIC_CONTENT_URL}/${t.id}.jpg`,
+					} as TrackMeta)
 			),
 			currentTrackIndex
 		);
@@ -56,9 +47,7 @@
 	<slot />
 </main>
 
-{#await AudioPlayer}
-	<footer />
-{:then AudioPlayer}
+{#await AudioPlayer then AudioPlayer}
 	<svelte:component this={AudioPlayer} />
 {:catch error}
 	{@debug error}
@@ -96,16 +85,5 @@
 		margin: auto;
 		margin-top: 2rem;
 		max-width: 1000px;
-	}
-
-	footer {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-
-		width: 100%;
-		height: $hidden-player-height;
-
-		background-color: $dark-color;
 	}
 </style>
