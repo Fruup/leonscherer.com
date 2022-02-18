@@ -163,7 +163,6 @@
 	$bp: 500px;
 
 	footer {
-		--hidden-height: 36px;
 		--player-max-width: 600px;
 		--hide-duration: 300ms;
 	}
@@ -176,7 +175,7 @@
 		transform: translateX(-50%);
 
 		max-width: var(--player-max-width);
-		height: var(--hidden-height);
+		height: $hidden-player-height;
 		display: flex;
 	}
 
@@ -221,7 +220,7 @@
 
 		button.show-hide {
 			--margin: 3px;
-			--size: calc(var(--hidden-height) - 2 * var(--margin));
+			--size: calc($hidden-player-height - 2 * var(--margin));
 
 			position: absolute;
 			top: var(--margin);
@@ -306,7 +305,7 @@
 		}
 
 		&.hidden {
-			transform: translateY(calc(100% - var(--hidden-height)));
+			transform: translateY(calc(100% - $hidden-player-height));
 		}
 	}
 </style>

@@ -11,22 +11,27 @@
 		const data: MetaResponseBody = await response.json();
 
 		// read current track index from storage
-		var currentTrackIndex = browser ? parseInt(localStorage.getItem('lastTrackIndex')) : data.length - 1;
+		var currentTrackIndex = browser
+			? parseInt(localStorage.getItem("lastTrackIndex"))
+			: data.length - 1;
 
 		// init audio manager
 		const url =
 			"https://raw.githubusercontent.com/Fruup/leonscherer.com/master/content/music";
 
 		initAudio(
-			data.map((t, i) => <TrackDescription>({
-				...t,
-				//coverUrl: t.coverApproved ? (t.coverUrl || `${url}/${t.id}.jpg`) : `${url}/default.jpg`,
-				coverUrl: t.coverUrl || `${url}/${t.id}.jpg`,
-				howl: new Howl({
-					preload: i === currentTrackIndex,
-					src: `${url}/${t.id}.mp3`,
-				}),
-			})),
+			data.map(
+				(t, i) =>
+					<TrackDescription>{
+						...t,
+						//coverUrl: t.coverApproved ? (t.coverUrl || `${url}/${t.id}.jpg`) : `${url}/default.jpg`,
+						coverUrl: t.coverUrl || `${url}/${t.id}.jpg`,
+						howl: new Howl({
+							preload: i === currentTrackIndex,
+							src: `${url}/${t.id}.mp3`,
+						}),
+					}
+			),
 			currentTrackIndex
 		);
 
@@ -36,21 +41,12 @@
 </script>
 
 <script lang="ts">
-	import AudioPlayer from "$lib/components/AudioPlayer.svelte";
 	import Header from "$lib/components/Header.svelte";
-	// import { audioStore } from "$lib/audioStore";
-	// import { browser } from "$app/env";
 
-	// if (browser) {
-	// 	document.onkeydown = (e) => {
-	// 		if (e.key === " ") {
-	// 			// prevent scrolling with space bar
-	// 			//e.preventDefault();
-	// 			// pause/resume playback
-	// 			//audioStore.togglePlayback();
-	// 		}
-	// 	};
-	// }
+	// lazy load audio player component
+	const AudioPlayer = import("$lib/components/AudioPlayer.svelte").then(
+		(v) => v.default
+	);
 </script>
 
 <Header />
@@ -59,7 +55,13 @@
 	<slot />
 </main>
 
-<AudioPlayer />
+{#await AudioPlayer}
+	<footer />
+{:then AudioPlayer}
+	<svelte:component this={AudioPlayer} />
+{:catch error}
+	{@debug error}
+{/await}
 
 <style lang="scss">
 	@import "../globals.scss";
@@ -93,5 +95,16 @@
 		margin: auto;
 		margin-top: 2rem;
 		max-width: 1000px;
+	}
+
+	footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+
+		width: 100%;
+		height: $hidden-player-height;
+
+		background-color: $dark-color;
 	}
 </style>
