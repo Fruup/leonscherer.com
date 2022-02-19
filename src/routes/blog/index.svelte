@@ -26,6 +26,10 @@
 	export let posts: BlogMeta[] = [];
 </script>
 
+<svelte:head>
+	<title>Blog - Leon Scherer</title>
+</svelte:head>
+
 <Page>
 	<div>
 		{#each posts as post}

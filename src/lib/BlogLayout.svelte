@@ -8,11 +8,13 @@
 		// write last page to local storage
 		localStorage.setItem("lastBlogPost", $page.url.pathname);
 	});
+
+	export let title = "Blog";
 </script>
 
-<!-- <svelte:head>
-	<link rel="stylesheet" href="/prism.css" />
-</svelte:head> -->
+<svelte:head>
+	<title>{title} - Leon Scherer</title>
+</svelte:head>
 
 <Page>
 	<article class="blog-post">
