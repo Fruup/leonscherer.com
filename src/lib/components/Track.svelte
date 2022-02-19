@@ -26,6 +26,8 @@
 
 		background-color: $dark-color;
 
+		max-width: 256px;
+
 		flex-basis: 12rem;
 		flex-shrink: 1;
 		flex-grow: 1;
