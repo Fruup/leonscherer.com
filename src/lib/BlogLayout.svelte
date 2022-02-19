@@ -10,18 +10,20 @@
 	});
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
 	<link rel="stylesheet" href="/prism.css" />
-</svelte:head>
+</svelte:head> -->
 
 <Page>
-	<article>
+	<article class="blog-post">
 		<slot />
 	</article>
 </Page>
 
-<style global>
-	article {
+<style global lang="scss">
+	@import "../style/prism.css";
+
+	.blog-post {
 		text-align: left;
 		margin: 0 0.75rem;
 
@@ -29,20 +31,20 @@
 		line-height: 135%;
 	}
 
-	article h1 {
+	.blog-post h1 {
 		font-size: 2em;
 		line-height: 110%;
 
 		margin: .5em 0 0.5em 10%;
 	}
 
-	article :not(pre) > code {
+	.blog-post :not(pre) > code {
 		background-color: rgba(0, 0, 0, 0.075);
 		padding: 0.05em 0.25em;
 		border-radius: 4px;
 	}
 
-	article pre {
+	.blog-post pre {
 		border-radius: 6px;
 	}
 </style>

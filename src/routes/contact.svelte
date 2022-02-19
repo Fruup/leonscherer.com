@@ -107,6 +107,7 @@
 	@import "src/globals.scss";
 
 	#container {
+		font-size: 1.2rem;
 		max-width: 500px;
 		min-width: 50%;
 		margin: auto;
@@ -118,7 +119,7 @@
 		flex-direction: column;
 
 		span {
-			font-size: 1.3rem;
+			font-size: 1.3em;
 			text-decoration: underline;
 		}
 	}
@@ -127,7 +128,7 @@
 	textarea {
 		font-family: unset;
 		margin-top: 0.25rem;
-		font-size: 1rem;
+		font-size: 1em;
 		text-decoration: none;
 		padding: 0.5rem;
 	}
@@ -136,7 +137,7 @@
 		padding: 0.5rem 1rem;
 
 		font-family: unset;
-		font-size: 1.3rem;
+		font-size: 1.3em;
 
 		background-color: $dark-color;
 		color: $accent-color;

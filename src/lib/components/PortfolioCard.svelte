@@ -38,6 +38,7 @@
 	$bp: 600px;
 
 	article {
+		font-size: 1.2rem;
 		text-align: center;
 
 		max-width: 650px;
@@ -109,7 +110,7 @@
 			div,
 			span {
 				flex-grow: 1;
-				justify-content: space-around;
+				justify-content: space-evenly;
 			}
 
 			@media screen and (max-width: $bp) {

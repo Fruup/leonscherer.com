@@ -5,7 +5,6 @@
 	const portfolio = [
 		{
 			title: "Internal Company App",
-			//imgUrl: "/covers/chillig.gif",
 			text:
 				"I wrote a mobile web app that is accessible in the company's intranet. " +
 				"Its purpose is to make regularly executed processes fast and intuitive. " +
@@ -16,18 +15,18 @@
 		},
 		{
 			title: "Personal Website",
-			imgUrl: "https://raw.githubusercontent.com/Fruup/leonscherer.com/master/content/music/p01.jpg",
+			imgUrl: "https://raw.githubusercontent.com/Fruup/leonscherer.com/testing/content/music/webp/p01.webp",
 			text:
 				"This website you are currently on is my personal place to publish creative endeavors. " +
 				"As you read your way through my blogs or portfolio, you can listen to music I wrote over " +
 				"the last couple of years. Through the power of the Single Page Application, there does not " +
 				"have to be a break from listening. While keeping things nice to use on desktop, " +
 				"a mobile-first approach to design is key in the web of today.",
-			tech: ["Svelte", "Firebase", "SPA"],
+			tech: ["Svelte & SvelteKit", "Netlify", "SPA"],
 		},
 		{
 			title: "A Blog Page",
-			imgUrl: "/img/allaroundscorer.png",
+			imgUrl: "/img/allaroundscorer.webp",
 			text:
 				"I built a blog page for a friend of mine, focussing on making his workflow as easy as possible. " +
 				"He writes markdown files containing the blog posts with some custom components I wrote. " +

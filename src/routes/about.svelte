@@ -48,6 +48,7 @@
 
 <style lang="scss">
 	.about {
+		font-size: 1.2rem;
 		text-align: left;
 
 		margin: 10px 20px;
