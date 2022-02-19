@@ -7,7 +7,7 @@ import type { TrackMeta } from "./helpers/types";
 // config
 
 export const MUSIC_CONTENT_URL =
-	"https://raw.githubusercontent.com/Fruup/leonscherer.com/master/content/music";
+	"https://raw.githubusercontent.com/Fruup/leonscherer.com/testing/content/music";
 
 // --------------------------------------------------------------------
 // store
@@ -135,7 +135,7 @@ export function loadAudio(track: TrackMeta) {
 
 		// create new howl instance
 		howlInstance = new Howl({
-			src: `${MUSIC_CONTENT_URL}/${track.id}.mp3`,
+			src: `${MUSIC_CONTENT_URL}/mp3/${track.id}.mp3`,
 			html5: true,
 			onload: () => resolve(),
 			onloaderror: (soundId, error) => reject(error),

@@ -33,12 +33,16 @@
 		font-size: 2em;
 		line-height: 110%;
 
-		margin: 0 0 0.5rem 10%;
+		margin: .5em 0 0.5em 10%;
 	}
 
 	article :not(pre) > code {
 		background-color: rgba(0, 0, 0, 0.075);
 		padding: 0.05em 0.25em;
 		border-radius: 4px;
+	}
+
+	article pre {
+		border-radius: 6px;
 	}
 </style>

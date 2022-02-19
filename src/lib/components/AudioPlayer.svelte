@@ -4,13 +4,13 @@
 		audioStoreData,
 		getCurrentTrack,
 		setCurrentTrackByIndex,
-		togglePlayback,
 	} from "$lib/audio";
 	import { fade } from "svelte/transition";
 	import PlaybackSlider from "$lib/components/PlaybackSlider.svelte";
 	import type { TrackMeta } from "$lib/helpers/types";
 	import { onMount } from "svelte";
-	import PlayIcon from "$lib/icons/PlayIcon.svelte";
+	import PlaybackButton from "./PlaybackButton.svelte";
+import IconPlay from "$lib/icons/IconPlay.svelte";
 
 	// functions
 	onMount(() => {
@@ -45,11 +45,8 @@
 		currentTrack?.coverArtist &&
 		currentTrack?.coverArtistUrl;
 
-	// $: if ($audioStore.currentTrackIndex >= 0 && $audioStore.currentTrackIndex < $audioStore.tracks.length)
-	// 		currentTrack = $audioStore.tracks[$audioStore.currentTrackIndex];
-
-	// animation
-	const duration = 50;
+	// paths
+	const SVG_ARROW_UP = "/svg/arrow-up.svg";
 </script>
 
 <footer
@@ -67,7 +64,7 @@
 					hidden = !hidden;
 				}}
 			>
-				<img class="arrow" class:hidden src="/svg/arrow-up.svg" alt="X" />
+				<img class="arrow" class:hidden src={SVG_ARROW_UP} alt="X" />
 			</button>
 
 			{#if hidden}
@@ -79,12 +76,7 @@
 					out:fade={{ duration: 100 }}
 				>
 					<div class="icon-container center-content">
-						<PlayIcon
-							fill="rgb(105, 105, 105)"
-							alt="Playing"
-							width="24"
-							height="24"
-						/>
+						<IconPlay width="16px" fill="#666" />
 					</div>
 
 					{#if currentTrack}
@@ -98,32 +90,7 @@
 
 				<div class="container center-content" transition:fade>
 					<div class="center-content">
-						<button
-							class="playback"
-							on:click={togglePlayback}
-							on:keydown={(e) => {
-								if (e.key === " ") {
-									e.preventDefault();
-									e.stopPropagation();
-								}
-							}}
-						>
-							{#if $audioStore.playing}
-								<img
-									transition:fade={{ delay: 0, duration: 50 }}
-									src="/svg/pause.svg"
-									alt=""
-									width="35%"
-								/>
-							{:else}
-								<img
-									transition:fade={{ delay: 0, duration: 50 }}
-									src="/svg/play.svg"
-									alt=""
-									width="35%"
-								/>
-							{/if}
-						</button>
+						<PlaybackButton />
 					</div>
 
 					<div class="progress-and-meta">
@@ -158,7 +125,7 @@
 </footer>
 
 <style lang="scss">
-	@import "../../globals.scss";
+	@import "src/globals.scss";
 
 	// variables
 	$bp: 500px;
@@ -245,37 +212,6 @@
 				&.hidden {
 					transform: rotateZ(0deg);
 				}
-			}
-		}
-
-		button.playback {
-			position: relative;
-			top: 0;
-			left: 0;
-
-			width: 60px;
-			height: 60px;
-			flex-grow: 0;
-			flex-shrink: 0;
-			padding: 0;
-
-			border: none;
-			border-radius: 999px;
-
-			background-color: white;
-			box-shadow: 0 6px 5px rgba(0, 0, 0, 0.26);
-
-			transition: transform 25ms ease-out;
-
-			&:hover {
-				transform: scale(1.1);
-			}
-
-			img {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
 			}
 		}
 

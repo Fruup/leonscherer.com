@@ -21,7 +21,7 @@
 					({
 						...t,
 						//coverUrl: t.coverApproved ? (t.coverUrl || `${url}/${t.id}.jpg`) : `${url}/default.jpg`,
-						coverUrl: t.coverUrl || `${MUSIC_CONTENT_URL}/${t.id}.jpg`,
+						coverUrl: t.coverUrl || `${MUSIC_CONTENT_URL}/webp/${t.id}.webp`,
 					} as TrackMeta)
 			),
 			currentTrackIndex

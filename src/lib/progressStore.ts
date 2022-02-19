@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getCurrentTrack, howlInstance } from "$lib/audio";
+import { howlInstance } from "$lib/audio";
 
 function createProgressStore() {
 	// create store

@@ -1,8 +1,10 @@
+<script>
+	export let fill = "#171717";
+</script>
+
 <svg
-	width="60"
-	height="70"
-	viewBox="-8 0 52 70"
-	fill={$$props.fill || "#171717"}
+	viewBox="-8 -4 56 70"
+	{fill}
 	{...$$props}
 	xmlns="http://www.w3.org/2000/svg"
 >
