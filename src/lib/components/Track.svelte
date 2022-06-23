@@ -42,10 +42,10 @@
 			width: 100%;
 			height: 0;
 			padding-bottom: 100%;
-			background-color: $dark-color;
+			background: $dark-color;
 
 			button {
-				background-color: $dark-color;
+				background: $dark-color;
 
 				margin: 0;
 				padding: 0;
@@ -60,15 +60,16 @@
 				display: grid;
 				place-items: center;
 
-				transition: border-width 100ms;
-
 				img {
-					background-color: $dark-color;
+					background: $dark-color;
+					transition: transform 100ms;
 				}
 
 				&:hover {
 					cursor: pointer;
-					border-width: 0.5rem;
+					img {
+						transform: scale(.925);
+					}
 				}
 			}
 		}
