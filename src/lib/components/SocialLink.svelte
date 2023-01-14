@@ -1,15 +1,15 @@
 <script lang="ts">
-	export let href = "/";
-	export let icon = undefined;
+	import type { SvelteComponent } from 'svelte'
+
+	export let href = '/'
+	export let icon: typeof SvelteComponent
 </script>
 
-<a {href} target="_blank">
+<a {href} target="_blank" rel="noreferrer">
 	<svelte:component this={icon} />
 </a>
 
 <style lang="scss">
-	@import "../../globals.scss";
-
 	a {
 		display: inline-grid;
 		place-items: center;

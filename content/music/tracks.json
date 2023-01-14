@@ -3,92 +3,98 @@
 		"id": "chillig",
 		"title": "Chillig",
 		"release": "1900-01-01",
-		"tags": ["Lo-Fi"],
-
+		"tags": [
+			"Lo-Fi"
+		],
 		"coverArtist": "Martith",
 		"coverArtistUrl": "https://www.instagram.com/martith.art/",
 		"coverApproved": true
 	},
-
 	{
 		"id": "desert",
 		"title": "A Desert Theme",
 		"release": "1900-01-01",
-		"tags": ["Orchestral"],
-
+		"tags": [
+			"Orchestral"
+		],
 		"coverArtist": "Charles Morgenstern",
 		"coverArtistUrl": "https://www.tetramodal.com",
 		"coverApproved": true
 	},
-
 	{
 		"id": "fire",
 		"title": "Fire",
 		"release": "1900-01-01",
-		"tags": ["Synth", "Piano"],
-
+		"tags": [
+			"Synth",
+			"Piano"
+		],
 		"coverArtist": "Nico Ismaili",
 		"coverArtistUrl": "https://nico.ismaili.de",
 		"coverApproved": true
 	},
-
 	{
 		"id": "hide",
 		"title": "Hide",
 		"release": "1900-01-01",
-		"tags": ["Piano", "Orchestral"],
-
-		"coverApproved": false
+		"tags": [
+			"Piano",
+			"Orchestral"
+		],
+		"coverApproved": true
 	},
-
 	{
 		"id": "p01",
 		"title": "P01",
 		"release": "1900-01-01",
-		"tags": ["Piano", "Orchestral"],
-
+		"tags": [
+			"Piano",
+			"Orchestral"
+		],
 		"coverArtist": "Sina",
 		"coverArtistUrl": "https://www.instagram.com/_sinacarina",
 		"coverApproved": true
 	},
-
 	{
 		"id": "p02",
 		"title": "P02",
 		"release": "1900-01-01",
-		"tags": ["EDM", "Synth"],
-
+		"tags": [
+			"EDM",
+			"Synth"
+		],
 		"coverArtist": "Nathan",
 		"coverArtistUrl": "https://www.deviantart.com/sunshineproxy",
 		"coverApproved": true
 	},
-
 	{
 		"id": "trailer",
 		"title": "Trailer Music",
 		"release": "1900-01-01",
-		"tags": ["Orchestral"],
-
+		"tags": [
+			"Orchestral"
+		],
 		"coverApproved": true
 	},
-
 	{
 		"id": "voyage",
 		"title": "Petit Voyage",
 		"release": "1900-01-01",
-		"tags": ["Piano"],
-
+		"tags": [
+			"Piano"
+		],
 		"coverArtist": "Thomas Arnaud",
 		"coverArtistUrl": "https://www.instagram.com/thomasarnaudart/",
 		"coverApproved": true
 	},
-
 	{
 		"id": "kakariko",
 		"title": "Kakariko Village",
 		"release": "2020-08-05",
-		"tags": ["Piano", "Strings"],
-
+		"tags": [
+			"Piano",
+			"Strings"
+		],
 		"coverArtist": "Jessica Smith",
 		"coverArtistUrl": "https://artofjess.com",
 		"coverApproved": true

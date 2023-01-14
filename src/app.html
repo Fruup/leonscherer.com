@@ -2,39 +2,11 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="description" content="" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-		<style>
-			html,
-			body {
-				overflow-x: hidden;
-				height: 100%;
-	
-				/* font-family: Arial, Helvetica, sans-serif; */
-				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-				/* font-family: Verdana, Geneva, Tahoma, sans-serif; */
-			}
-	
-			body {
-				margin: 0;
-				padding: 0;
-			}
-	
-			button {
-				padding: 0;
-			}
-	
-			.center-content {
-				display: grid;
-				place-items: center;
-			}
-		</style>
-
+		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	<body>
-		<div>%sveltekit.body%</div>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

@@ -1,55 +1,52 @@
 <script lang="ts">
-	import Page from "$lib/components/Page.svelte";
+	import Page from '$lib/components/Page.svelte'
 
-	function encode(data) {
-		return Object.keys(data)
-			.map(
-				(key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
-			)
-			.join("&");
+	const encode = (data: { [K: string]: string | number | boolean }) =>
+		Object.keys(data)
+			.map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+			.join('&')
+
+	const handleError = () => {
+		status = 'Something went wrong...'
+		success = false
 	}
 
-	function handleError() {
-		status = "Something went wrong...";
-		success = false;
-	}
-
-	function handleResponse(res) {
-		if (res.status != 200) handleError();
+	const handleResponse = (res) => {
+		if (res.status != 200) handleError()
 		else {
-			status = "Thank you for the message!";
-			success = true;
+			status = 'Thank you for the message!'
+			success = true
 		}
 	}
 
-	function handleSubmit(e) {
-		e.preventDefault();
+	const handleSubmit = (e) => {
+		e.preventDefault()
 
 		// no empty messages
 		if (!message) {
-			success = false;
-			status = "Do not send empty messages please.";
-			return;
+			success = false
+			status = 'Do not send empty messages please.'
+			return
 		}
 
 		fetch(formElem.action, {
 			method: formElem.method,
-			headers: { Accept: "application/json" },
+			headers: { Accept: 'application/json' },
 			body: new FormData(formElem),
 		})
 			.then(handleResponse)
-			.catch(handleError);
+			.catch(handleError)
 	}
 
 	// props
 
-	let formElem: HTMLFormElement;
+	let formElem: HTMLFormElement
 
-	let mail: string;
-	let message: string;
+	let mail: string
+	let message: string
 
-	let success: boolean = false;
-	let status: string;
+	let success: boolean = false
+	let status: string
 </script>
 
 <svelte:head>
@@ -65,23 +62,17 @@
 		on:submit={handleSubmit}
 		bind:this={formElem}
 	>
-		<label name="mail" for="mail">
+		<label for="mail">
 			<span>Mail</span>
-			<input
-				name="mail"
-				type="email"
-				placeholder="your@mail.com"
-				bind:value={mail}
-			/>
+			<input name="mail" type="email" placeholder="your@mail.com" bind:value={mail} />
 		</label>
 
 		<br />
 
-		<label name="message" for="message">
+		<label for="message">
 			<span>Message</span>
 			<textarea
 				name="message"
-				type="text"
 				id="msg"
 				placeholder="Put your message here..."
 				rows="5"
@@ -104,8 +95,6 @@
 </Page>
 
 <style lang="scss">
-	@import "src/globals.scss";
-
 	#container {
 		font-size: 1.2rem;
 		max-width: 500px;

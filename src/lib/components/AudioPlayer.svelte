@@ -1,57 +1,47 @@
 <script lang="ts">
-	import {
-		audioStore,
-		audioStoreData,
-		getCurrentTrack,
-		setCurrentTrackByIndex,
-	} from "$lib/audio";
-	import { fade } from "svelte/transition";
-	import PlaybackSlider from "$lib/components/PlaybackSlider.svelte";
-	import type { TrackMeta } from "$lib/helpers/types";
-	import { onMount } from "svelte";
-	import PlaybackButton from "./PlaybackButton.svelte";
-import IconPlay from "$lib/icons/IconPlay.svelte";
+	import { audioStore, audioStoreData, getCurrentTrack, setCurrentTrackByIndex } from '$lib/audio'
+	import { fade } from 'svelte/transition'
+	import PlaybackSlider from '$lib/components/PlaybackSlider.svelte'
+	import type { TrackMeta } from '$lib/helpers/types'
+	import { onMount } from 'svelte'
+	import PlaybackButton from './PlaybackButton.svelte'
+	import IconPlay from '$lib/icons/IconPlay.svelte'
 
 	// functions
 	onMount(() => {
-		// get first track index
-		const i = localStorage.getItem("currentTrackIndex");
-		setCurrentTrackByIndex(
-			typeof i === "number" ? i : audioStoreData.tracks.length - 1
-		);
-		currentTrack = audioStoreData.tracks[i];
+		// currentTrack = audioStoreData.tracks[i]
 
 		setTimeout(() => {
-			ready = true;
-			hidden = false;
-		}, 500);
+			ready = true
+			hidden = false
+		}, 500)
 
 		// subscribe and clean up after
 		return audioStore.subscribe((s) => {
-			if (s.playing && !s.wasPlaying) hidden = false;
-			currentTrack = getCurrentTrack(s);
-		});
-	});
+			if (s.playing && !s.wasPlaying) hidden = false
+			currentTrack = getCurrentTrack(s)
+		})
+	})
 
 	// props
-	export let ready = false;
-	export let hidden = true;
+	export let ready = false
+	export let hidden = true
 
-	export let currentTrack: Partial<TrackMeta> = undefined;
+	export let currentTrack: Partial<TrackMeta> | undefined = undefined
+	// $: currentTrack = $audioStore.tracks[$audioStore.currentTrackIndex]
 
 	// computed
 	$: showCoverArtist =
-		currentTrack?.coverApproved &&
-		currentTrack?.coverArtist &&
-		currentTrack?.coverArtistUrl;
+		currentTrack?.coverApproved && currentTrack?.coverArtist && currentTrack?.coverArtistUrl
 
 	// paths
-	const SVG_ARROW_UP = "/svg/arrow-up.svg";
+	const SVG_ARROW_UP = '/svg/arrow-up.svg'
 </script>
 
 <footer
 	on:mouseenter={() => hidden && (hidden = false)}
 	on:click={() => hidden && (hidden = false)}
+	on:keydown={() => hidden && (hidden = false)}
 	class:hidden
 	class:ready
 >
@@ -60,8 +50,8 @@ import IconPlay from "$lib/icons/IconPlay.svelte";
 			<button
 				class="show-hide"
 				on:click={(e) => {
-					e.stopPropagation();
-					hidden = !hidden;
+					e.stopPropagation()
+					hidden = !hidden
 				}}
 			>
 				<img class="arrow" class:hidden src={SVG_ARROW_UP} alt="X" />
@@ -70,11 +60,7 @@ import IconPlay from "$lib/icons/IconPlay.svelte";
 			{#if hidden}
 				<!-- hidden -->
 
-				<div
-					class="hidden-container"
-					in:fade={{ delay: 800 }}
-					out:fade={{ duration: 100 }}
-				>
+				<div class="hidden-container" in:fade={{ delay: 800 }} out:fade={{ duration: 100 }}>
 					<div class="icon-container center-content">
 						<IconPlay width="16px" fill="#666" />
 					</div>
@@ -106,6 +92,7 @@ import IconPlay from "$lib/icons/IconPlay.svelte";
 												Cover art by <a
 													href={currentTrack.coverArtistUrl}
 													target="_blank"
+													rel="noreferrer"
 												>
 													{currentTrack.coverArtist}
 												</a>
@@ -125,8 +112,6 @@ import IconPlay from "$lib/icons/IconPlay.svelte";
 </footer>
 
 <style lang="scss">
-	@import "src/globals.scss";
-
 	// variables
 	$bp: 500px;
 
@@ -169,8 +154,7 @@ import IconPlay from "$lib/icons/IconPlay.svelte";
 		bottom: 0;
 
 		transform: translateX(0);
-		transition: transform var(--hide-duration)
-			cubic-bezier(0.15, 0.57, 0.35, 0.95);
+		transition: transform var(--hide-duration) cubic-bezier(0.15, 0.57, 0.35, 0.95);
 
 		div.container {
 			box-sizing: border-box;

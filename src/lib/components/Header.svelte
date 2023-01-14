@@ -1,24 +1,24 @@
 <script>
-	import { page } from "$app/stores";
+	import { page } from '$app/stores'
 
-	import Link from "$lib/components/Link.svelte";
-	import SocialLink from "$lib/components/SocialLink.svelte";
-	import IconGitHub from "$lib/icons/IconGitHub.svelte";
-	import IconInstagram from "$lib/icons/IconInstagram.svelte";
-	import IconTwitter from "$lib/icons/IconTwitter.svelte";
+	import Link from '$lib/components/Link.svelte'
+	import SocialLink from '$lib/components/SocialLink.svelte'
+	import IconGitHub from '$lib/icons/IconGitHub.svelte'
+	import IconInstagram from '$lib/icons/IconInstagram.svelte'
+	import IconTwitter from '$lib/icons/IconTwitter.svelte'
 
-	$: blogUrl = $page.url.pathname.startsWith("/blog")
-		? "/blog"
-		: typeof localStorage !== "undefined"
-		? (localStorage.getItem("lastBlogPost") || "/blog")
-		: "/blog";
+	$: blogUrl = $page.url.pathname.startsWith('/blog')
+		? '/blog'
+		: typeof localStorage !== 'undefined'
+		? localStorage.getItem('lastBlogPost') || '/blog'
+		: '/blog'
 </script>
 
 <header>
 	<nav>
 		<div class="pages">
-			<Link href="/portfolio">Portfolio</Link>
 			<Link href="/music">Music</Link>
+			<Link href="/portfolio">Portfolio</Link>
 			<Link href={blogUrl}>Blog</Link>
 			<Link href="/about">About</Link>
 			<Link href="/contact">Contact</Link>
@@ -26,10 +26,7 @@
 
 		<div class="social">
 			<SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} />
-			<SocialLink
-				href="https://instagram.com/leonscherersan"
-				icon={IconInstagram}
-			/>
+			<SocialLink href="https://instagram.com/leonmaj7" icon={IconInstagram} />
 			<SocialLink href="https://github.com/Fruup" icon={IconGitHub} />
 		</div>
 	</nav>
@@ -62,7 +59,7 @@
 
 			div {
 				display: flex;
-				gap: 0.2rem;
+				gap: 0.25rem;
 
 				height: var(--link-height);
 			}

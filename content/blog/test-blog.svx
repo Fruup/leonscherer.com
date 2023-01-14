@@ -2,7 +2,7 @@
 title: Das ist ein test post
 excerpt: Ein Exzerpt eines ptest posts
 tags: [git, coding]
-release: 1999-01-02
+release: 3000-01-01
 ---
 
 <script>

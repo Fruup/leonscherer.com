@@ -1,15 +1,15 @@
 <script lang="ts">
-	export let title: string = undefined;
-	export let imgUrl: string = undefined;
-	export let text: string = undefined;
-	export let tech: string[] = undefined;
-	export let link: string = undefined;
+	export let title: string
+	export let imgUrl: string | undefined = undefined
+	export let text: string
+	export let tech: string[]
+	export let link: string | undefined = undefined
 </script>
 
 <!-- <a href={link} target="_blank"> -->
 <article>
 	{#if link}
-		<a href={link} target="_blank"><h2>{title}</h2></a>
+		<a href={link} target="_blank" rel="noreferrer"><h2>{title}</h2></a>
 	{:else}
 		<h2>{title}</h2>
 	{/if}

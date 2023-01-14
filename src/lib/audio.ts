@@ -1,27 +1,22 @@
-import { browser } from "$app/env";
-import { Howl } from "howler";
-import { writable } from "svelte/store";
-import type { TrackMeta } from "./helpers/types";
-
-// --------------------------------------------------------------------
-// config
-
-export const MUSIC_CONTENT_URL =
-	"https://raw.githubusercontent.com/Fruup/leonscherer.com/testing/content/music";
+import { browser } from '$app/environment'
+import { Howl } from 'howler'
+import type { SvelteComponent } from 'svelte'
+import { writable, type Readable } from 'svelte/store'
+import type { TrackMeta } from './helpers/types'
 
 // --------------------------------------------------------------------
 // store
 
 // audio store type definition
 declare type AudioStore = {
-	tracks: TrackMeta[];
-	queue: number[];
-	currentTrackIndex: number;
-	playing: boolean;
-	wasPlaying: boolean;
-	seekInterval?: NodeJS.Timeout;
-	autoplay: boolean;
-};
+	tracks: TrackMeta[]
+	queue: number[]
+	currentTrackIndex: number
+	playing: boolean
+	wasPlaying: boolean
+	seekInterval?: NodeJS.Timeout
+	autoplay: boolean
+}
 
 export var audioStoreData: AudioStore = {
 	tracks: [],
@@ -30,167 +25,172 @@ export var audioStoreData: AudioStore = {
 	playing: false,
 	wasPlaying: false,
 	autoplay: true,
-};
+}
 
 function createAudioStore() {
 	// return store
-	return writable<AudioStore>(audioStoreData);
+	return writable<AudioStore>(audioStoreData)
 }
 
-export const audioStore = createAudioStore();
+export const audioStore = createAudioStore()
 
-export var howlInstance: Howl = undefined;
+export var howlInstance: Howl
 
 // --------------------------------------------------------------------
 // private functions
 
-const update = () => audioStore.update(_ => audioStoreData);
+const update = () => audioStore.update((_) => audioStoreData)
 
 function startPlayback() {
 	// set store
-	audioStoreData.wasPlaying = audioStoreData.playing;
-	audioStoreData.playing = true;
+	audioStoreData.wasPlaying = audioStoreData.playing
+	audioStoreData.playing = true
 
 	// start howl
-	howlInstance.play();
+	howlInstance.play()
 
 	// update store
-	update();
+	update()
 }
 
 function handleTrackEnd() {
 	// stop playing
-	audioStoreData.wasPlaying = audioStoreData.playing;
-	audioStoreData.playing = false;
+	audioStoreData.wasPlaying = audioStoreData.playing
+	audioStoreData.playing = false
 
-	update();
+	update()
 
 	// if autoplay, start next track in queue
 	if (audioStoreData.autoplay) {
-		const pause = 1000;
-		const currentTrackIndex = audioStoreData.currentTrackIndex;
+		const pause = 1000
+		const currentTrackIndex = audioStoreData.currentTrackIndex
 
 		if (audioStoreData.queue.length > 0) {
-			setTimeout(
-				() => {
-					if (audioStoreData.currentTrackIndex === currentTrackIndex)
-						setCurrentTrackByIndex(audioStoreData.queue.pop(), true);
-				},
-				pause
-			);
+			setTimeout(() => {
+				if (
+					audioStoreData.currentTrackIndex === currentTrackIndex &&
+					audioStoreData.queue.length > 0
+				) {
+					setCurrentTrackByIndex(audioStoreData.queue.pop()!, true)
+				}
+			}, pause)
 		}
 	}
 }
 
 function getRandomQueue() {
 	var queue = Array.from(Array(audioStoreData.tracks.length), (_, i) => i)
-	var currentIndex = queue.length;
+	var currentIndex = queue.length
 
 	// While there remain elements to shuffle...
 	while (0 !== currentIndex) {
 		// Pick a remaining element...
-		var randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
+		var randomIndex = Math.floor(Math.random() * currentIndex)
+		currentIndex -= 1
 
 		// And swap it with the current element.
-		var temporaryValue = queue[currentIndex];
-		queue[currentIndex] = queue[randomIndex];
-		queue[randomIndex] = temporaryValue;
+		var temporaryValue = queue[currentIndex]
+		queue[currentIndex] = queue[randomIndex]
+		queue[randomIndex] = temporaryValue
 	}
 
-	return queue;
+	return queue
 }
 
 // --------------------------------------------------------------------
 // global functions
 
-export const initAudio = (tracks: TrackMeta[], currentTrackIndex: number) => {
+export const initAudioEngine = (tracks: TrackMeta[], currentTrackIndex: number) => {
 	// set tracks
-	audioStoreData.tracks = tracks;
-	audioStoreData.currentTrackIndex = currentTrackIndex;
-
-	// hook up events
-	//howlInstance.on('end', () => handleTrackEnd(currentTrackIndex));
+	audioStoreData.tracks = tracks
 
 	// generate random queue
-	audioStoreData.queue = getRandomQueue();
+	audioStoreData.queue = getRandomQueue()
 
-	// update audio store
-	update();
-};
+	// set current track
+	// ("update" happens here)
+	setCurrentTrackByIndex(currentTrackIndex)
+}
 
 export function getCurrentTrack(store?: AudioStore) {
-	if (typeof store === 'undefined')
-		store = audioStoreData;
+	if (typeof store === 'undefined') store = audioStoreData
 
 	if (store.currentTrackIndex >= 0 && store.currentTrackIndex < store.tracks.length)
-		return store.tracks[store.currentTrackIndex];
-};
+		return store.tracks[store.currentTrackIndex]
+}
 
-export function loadAudio(track: TrackMeta) {
-	return new Promise<void>((resolve, reject) => {
+export function loadTrack(track: TrackMeta) {
+	return new Promise<void>(async (resolve, reject) => {
 		// unload
-		if (howlInstance)
-			howlInstance.unload();
+		if (howlInstance) howlInstance.unload()
+
+		const allTrackUrls = import.meta.glob('$content/music/mp3/*.mp3', { as: 'url' })
+		const match = Object.entries(allTrackUrls).find(([filename]) => filename.includes(track.id))
+		if (!match) throw Error('Unable to find track with id: ' + track.id)
+
+		const url = await match[1]()
 
 		// create new howl instance
 		howlInstance = new Howl({
-			src: `${MUSIC_CONTENT_URL}/mp3/${track.id}.mp3`,
+			src: url,
 			html5: true,
 			onload: () => resolve(),
 			onloaderror: (soundId, error) => reject(error),
 			onend: handleTrackEnd,
-		});
-	});
+		})
+	})
 }
 
 export function togglePlayback() {
 	// set data
-	audioStoreData.wasPlaying = audioStoreData.playing;
-	audioStoreData.playing = !audioStoreData.playing;
+	audioStoreData.wasPlaying = audioStoreData.playing
+	audioStoreData.playing = !audioStoreData.playing
 
-	//const howl = getCurrentTrack().howl;
-
-	if (audioStoreData.playing) howlInstance.play();
-	else howlInstance.pause();
+	if (audioStoreData.playing) howlInstance.play()
+	else howlInstance.pause()
 
 	// update store
-	update();
-};
+	update()
+}
+
+const storeCurrentTrackIndex = (i: number) => {
+	if (browser) localStorage.setItem('currentTrackIndex', i.toString())
+}
 
 export function setCurrentTrackById(id: string, play?: boolean) {
 	// find track
-	const index = audioStoreData.tracks.findIndex(t => t.id === id);
+	const index = audioStoreData.tracks.findIndex((t) => t.id === id)
+	storeCurrentTrackIndex(index)
 
 	// set
-	return setCurrentTrackByIndex(index, play);
+	return setCurrentTrackByIndex(index, play)
 }
 
 export async function setCurrentTrackByIndex(index: number, play?: boolean) {
 	// do nothing if id is not different
-	if (index === audioStoreData.currentTrackIndex)
-		return;
+	if (index === audioStoreData.currentTrackIndex) return
 
 	// set storage
-	if (browser)
-		localStorage.setItem('currentTrackIndex', index.toString());
+	storeCurrentTrackIndex(index)
 
 	// set data
-	audioStoreData.currentTrackIndex = index;
+	audioStoreData.currentTrackIndex = index
 
 	// stop all tracks
-	if (howlInstance)
-		howlInstance.stop();
-	//audioStoreData.tracks.forEach(t => t.howl.stop());
+	if (howlInstance) howlInstance.stop()
 
 	// update store
-	update();
+	update()
 
 	// load track
-	await loadAudio(getCurrentTrack());
+	const currentTrack = getCurrentTrack()
 
-	// start playing?
-	if (play) {
-		startPlayback();
+	if (currentTrack) {
+		await loadTrack(currentTrack)
+
+		// start playing?
+		if (play) {
+			startPlayback()
+		}
 	}
-};
+}

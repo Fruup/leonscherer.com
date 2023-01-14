@@ -1,39 +1,49 @@
 <script lang="ts">
-	import { setCurrentTrackById } from "$lib/audio";
-	import type { TrackMeta } from "$lib/helpers/types";
+	import IconAudioPlaying from '$lib/assets/IconAudioPlaying.svelte'
+	import { setCurrentTrackById, audioStore } from '$lib/audio'
+	import type { TrackMeta } from '$lib/helpers/types'
+	import { fade } from 'svelte/transition'
 
 	// props
-	export let track: TrackMeta;
+	export let track: TrackMeta
+
+	$: currentTrackId = $audioStore.tracks[$audioStore.currentTrackIndex].id
 </script>
 
 <div class="track">
+	{#if currentTrackId === track.id}
+		<div transition:fade={{ duration: 200 }} class="playing-icon">
+			<IconAudioPlaying />
+		</div>
+	{/if}
+
 	<div class="button-container">
 		<button on:click={() => setCurrentTrackById(track.id, true)}>
-			<img
-				src={track.coverUrl}
-				alt={`${track.title} cover image`}
-				width="100%"
-			/>
+			<img src={track.coverUrl} alt={`${track.title} cover image`} width="100%" />
 		</button>
 	</div>
 </div>
 
 <style lang="scss">
-	@import "../../globals.scss";
-
 	div.track {
+		position: relative;
+
 		border: 1px solid black;
 
 		background-color: $dark-color;
 
-		max-width: 256px;
+		.playing-icon {
+			width: 1.5em;
+			height: 1.5em;
+			padding: 0.5em;
 
-		flex-basis: 12rem;
-		flex-shrink: 1;
-		flex-grow: 1;
-
-		@media screen and (max-width: 786px) {
-			flex-basis: 9rem;
+			position: absolute;
+			bottom: 0.5em;
+			// left: 0.5em;
+			left: 50%;
+			translate: -50%;
+			background: radial-gradient(closest-side, rgba(0, 0, 0, 0.3), transparent);
+			z-index: 1;
 		}
 
 		div.button-container {
@@ -68,7 +78,7 @@
 				&:hover {
 					cursor: pointer;
 					img {
-						transform: scale(.925);
+						transform: scale(0.925);
 					}
 				}
 			}

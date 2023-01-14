@@ -1,29 +1,14 @@
-<script lang="ts" context="module">
-	import type { Load } from "@sveltejs/kit";
-	import type { BlogMeta } from "$lib/helpers/types";
-
-	export const load: Load = async ({ fetch }) => {
-		const res = await fetch("/blog.json");
-		const posts: BlogMeta[] = await res.json();
-
-		return {
-			status: 200,
-			props: { posts },
-		};
-	};
-
-	// export const prerender = true;
-</script>
-
 <script lang="ts">
-	import Page from "$lib/components/Page.svelte";
-	import { onMount } from "svelte";
+	import Page from '$lib/components/Page.svelte'
+	import { onMount } from 'svelte'
+	import type { PageServerData } from './$types'
 
 	onMount(() => {
-		localStorage.removeItem("lastBlogPost");
-	});
+		localStorage.removeItem('lastBlogPost')
+	})
 
-	export let posts: BlogMeta[] = [];
+	export let data: PageServerData
+	const { posts } = data
 </script>
 
 <svelte:head>
@@ -44,9 +29,6 @@
 </Page>
 
 <style lang="scss">
-	@import "src/globals";
-	@import "src/style/mixins";
-
 	div {
 		display: flex;
 		flex-direction: column;

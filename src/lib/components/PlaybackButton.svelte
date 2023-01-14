@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { audioStore, togglePlayback } from "$lib/audio";
-	import IconPause from "$lib/icons/IconPause.svelte";
-	import IconPlay from "$lib/icons/IconPlay.svelte";
-	import { fade, type TransitionConfig } from "svelte/transition";
+	import { audioStore, togglePlayback } from '$lib/audio'
+	import IconPause from '$lib/icons/IconPause.svelte'
+	import IconPlay from '$lib/icons/IconPlay.svelte'
+	import { fade, type TransitionConfig } from 'svelte/transition'
 
 	// animation
-	const transitionConfig: TransitionConfig = { delay: 0, duration: 50 };
+	const transitionConfig: TransitionConfig = { delay: 0, duration: 50 }
 </script>
 
 <button
 	class="playback center-content"
 	on:click={togglePlayback}
 	on:keydown={(e) => {
-		if (e.key === " ") {
-			e.preventDefault();
-			e.stopPropagation();
+		if (e.key === ' ') {
+			e.preventDefault()
+			e.stopPropagation()
 		}
 	}}
 >
