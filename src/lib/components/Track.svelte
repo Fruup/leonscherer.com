@@ -29,6 +29,8 @@
 		position: relative;
 
 		border: 1px solid black;
+		border-radius: 12px;
+		overflow: hidden;
 
 		background-color: $dark-color;
 
@@ -39,7 +41,6 @@
 
 			position: absolute;
 			bottom: 0.5em;
-			// left: 0.5em;
 			left: 50%;
 			translate: -50%;
 			background: radial-gradient(closest-side, rgba(0, 0, 0, 0.3), transparent);
@@ -63,7 +64,7 @@
 				width: 100%;
 				height: 100%;
 
-				border: 0px solid $dark-color;
+				border: none;
 
 				box-sizing: border-box;
 
@@ -73,6 +74,7 @@
 				img {
 					background: $dark-color;
 					transition: transform 100ms;
+					border-radius: 8px;
 				}
 
 				&:hover {

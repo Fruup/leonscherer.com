@@ -8,15 +8,15 @@ release: 1999-01-02
 # The problem
 
 Maybe you've found yourself in the same position as me:<br>
-I use a website generator that takes all the files I wrote and puts a resulting static, ready to be served website into a separate directory. GitHub Pages can only deploy sites located either in the `/docs` folder or in the root of the `gh-pages` branch. You could configure the generator to bake into a folder called `/docs` but the website doesn't always have to be a documentation, which breeds confusion. It is much cleaner to (git-)ignore the generated files on the master/development branch of the repository and rather deploy them to the root of a completely independent branch (i.e. `gh-pages`).
+I use a website generator that takes all the files I wrote and puts a resulting static, ready to be served website into a separate directory. GitHub Pages can only deploy sites located either in the `/docs` folder or in the root of the `gh-pages` branch. You could configure the generator to bake into a folder called `/docs` but the website doesn't always have to be a documentation, which breeds confusion. It is much cleaner to (git-)ignore the generated files on the main/development branch of the repository and rather deploy them to the root of a completely independent branch (i.e. `gh-pages`).
 
 # The environment
 
 Let's look at an example project demanding a solution for this problem.
-Suppose we have a git repository with two branches: `master`, which is used for the development of the site, and `gh-pages`, where the prebuilt, static website from `/dist` is supposed to live. `/dist` is the directory we want to push to the `gh-pages` branch.
+Suppose we have a git repository with two branches: `main`, which is used for the development of the site, and `gh-pages`, where the prebuilt, static website from `/dist` is supposed to live. `/dist` is the directory we want to push to the `gh-pages` branch.
 
 ```
-master
+main
   |-- ...
   |-- dist -----------> gh-pages
 						  |-- index.html
@@ -66,4 +66,4 @@ cd dist
 
 ```
 
-Also, make sure to add the dist folder to the `master` branch's `.gitignore` file.
+Also, make sure to add the dist folder to the `main` branch's `.gitignore` file.

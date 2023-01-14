@@ -17,14 +17,13 @@
 		text-decoration: none;
 
 		color: white;
-
-		width: 5.3rem;
-		height: 100%;
+		
+		width: var(--link-size);
+		height: var(--link-size);
 
 		background-color: $dark-color;
 
 		border-radius: 999px;
-		width: var(--link-height);
 	}
 
 	:global(a > svg > path) {

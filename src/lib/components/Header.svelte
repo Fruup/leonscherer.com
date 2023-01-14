@@ -1,11 +1,14 @@
 <script>
 	import { page } from '$app/stores'
+	import IconBurger from '$lib/assets/IconBurger.svelte'
 
 	import Link from '$lib/components/Link.svelte'
 	import SocialLink from '$lib/components/SocialLink.svelte'
 	import IconGitHub from '$lib/icons/IconGitHub.svelte'
 	import IconInstagram from '$lib/icons/IconInstagram.svelte'
 	import IconTwitter from '$lib/icons/IconTwitter.svelte'
+	import PageTitle from './PageTitle.svelte'
+	import { sidebarOpen } from './Sidebar.svelte'
 
 	$: blogUrl = $page.url.pathname.startsWith('/blog')
 		? '/blog'
@@ -15,6 +18,12 @@
 </script>
 
 <header>
+	<PageTitle />
+
+	<button class="sidebar-opener" on:click={() => ($sidebarOpen = true)}>
+		<IconBurger />
+	</button>
+
 	<nav>
 		<div class="pages">
 			<Link href="/music">Music</Link>
@@ -34,7 +43,9 @@
 
 <style lang="scss">
 	header {
-		--link-height: 2.6rem;
+		--link-size: 2.6rem;
+
+		position: relative;
 
 		text-align: center;
 		border-bottom: 1px solid black;
@@ -51,24 +62,39 @@
 			border-left: 0.2rem solid transparent;
 			border-right: 0.2rem solid transparent;
 
-			padding-top: 3rem;
-
-			@media screen and (max-width: 500px) {
-				overflow-x: scroll;
-			}
-
 			div {
 				display: flex;
 				gap: 0.25rem;
 
-				height: var(--link-height);
+				height: var(--link-size);
 			}
 		}
 	}
 
-	@media screen and (max-width: 700px) {
-		.social {
+	button.sidebar-opener {
+		display: none;
+		color: white;
+
+		position: absolute;
+		bottom: 0;
+		right: 0;
+
+		box-sizing: content-box;
+		padding: 0.5em;
+		width: 1.75em;
+		height: 1.75em;
+		background: $dark-color;
+
+		border-top-left-radius: 8px;
+	}
+
+	@media screen and (max-width: $breakpoint) {
+		header nav {
 			display: none;
+		}
+
+		button.sidebar-opener {
+			display: initial;
 		}
 	}
 </style>

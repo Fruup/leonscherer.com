@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { audioStore, audioStoreData, getCurrentTrack, setCurrentTrackByIndex } from '$lib/audio'
+	import { audioStore, getCurrentTrack } from '$lib/audio'
 	import { fade } from 'svelte/transition'
 	import PlaybackSlider from '$lib/components/PlaybackSlider.svelte'
 	import type { TrackMeta } from '$lib/helpers/types'
 	import { onMount } from 'svelte'
 	import PlaybackButton from './PlaybackButton.svelte'
 	import IconPlay from '$lib/icons/IconPlay.svelte'
+	import arrowUp from '$lib/assets/arrow-up.svg'
 
 	// functions
 	onMount(() => {
-		// currentTrack = audioStoreData.tracks[i]
-
 		setTimeout(() => {
 			ready = true
 			hidden = false
@@ -28,14 +27,10 @@
 	export let hidden = true
 
 	export let currentTrack: Partial<TrackMeta> | undefined = undefined
-	// $: currentTrack = $audioStore.tracks[$audioStore.currentTrackIndex]
 
 	// computed
 	$: showCoverArtist =
 		currentTrack?.coverApproved && currentTrack?.coverArtist && currentTrack?.coverArtistUrl
-
-	// paths
-	const SVG_ARROW_UP = '/svg/arrow-up.svg'
 </script>
 
 <footer
@@ -54,7 +49,7 @@
 					hidden = !hidden
 				}}
 			>
-				<img class="arrow" class:hidden src={SVG_ARROW_UP} alt="X" />
+				<img class="arrow" class:hidden src={arrowUp} alt="X" />
 			</button>
 
 			{#if hidden}
@@ -138,6 +133,8 @@
 	}
 
 	footer {
+		z-index: 1000;
+
 		color: white;
 
 		display: grid;

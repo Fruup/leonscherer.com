@@ -1,7 +1,6 @@
 import { browser } from '$app/environment'
 import { Howl } from 'howler'
-import type { SvelteComponent } from 'svelte'
-import { writable, type Readable } from 'svelte/store'
+import { writable } from 'svelte/store'
 import type { TrackMeta } from './helpers/types'
 
 // --------------------------------------------------------------------

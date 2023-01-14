@@ -6,32 +6,42 @@
 	onMount(() => {
 		// subscribe and clean up after
 		return progress.subscribe((value) => {
-			if (!_seeking) _currentProgress = value * parseInt(_playbackRangeSlider.max)
+			if (!seeking) currentProgress = value * max
 		})
 	})
 
 	// methods
-	function handleChange() {
+	const handleChange = () => {
 		// update progress store
-		const max = parseInt(_playbackRangeSlider.max)
-		const value = _playbackRangeSlider.valueAsNumber / max
+		const value = playbackRangeSlider.valueAsNumber / max
 		$progress = value
 	}
 
-	let _playbackRangeSlider: HTMLInputElement
-	let _seeking = false
-	let _currentProgress = 0
+	const handlePointerDown = () => {
+		seeking = true
+	}
+
+	const handlePointerUpWindow = () => {
+		if (seeking) seeking = false
+	}
+
+	let playbackRangeSlider: HTMLInputElement
+	let seeking = false
+	let currentProgress = 0
+
+	const max = 1000
 </script>
 
+<svelte:window on:pointerup={handlePointerUpWindow} />
+
 <input
-	bind:this={_playbackRangeSlider}
-	bind:value={_currentProgress}
+	bind:this={playbackRangeSlider}
+	bind:value={currentProgress}
 	type="range"
 	min="0"
-	max="1000"
+	{max}
 	on:change={handleChange}
-	on:mousedown={() => (_seeking = true)}
-	on:mouseup={() => (_seeking = false)}
+	on:pointerdown={handlePointerDown}
 />
 
 <style lang="scss">

@@ -1,5 +1,26 @@
 <script lang="ts">
+	import InputField from '$lib/components/InputField.svelte'
 	import Page from '$lib/components/Page.svelte'
+	import { onMount } from 'svelte'
+
+	onMount(() => {
+		const storedValues = localStorage.getItem('contactForm')
+		if (storedValues) {
+			const parsed = JSON.parse(storedValues)
+			message = parsed.message ?? ''
+			mail = parsed.mail ?? ''
+		}
+
+		return () => {
+			localStorage.setItem(
+				'contactForm',
+				JSON.stringify({
+					mail,
+					message,
+				}),
+			)
+		}
+	})
 
 	const encode = (data: { [K: string]: string | number | boolean }) =>
 		Object.keys(data)
@@ -11,7 +32,7 @@
 		success = false
 	}
 
-	const handleResponse = (res) => {
+	const handleResponse = (res: Response) => {
 		if (res.status != 200) handleError()
 		else {
 			status = 'Thank you for the message!'
@@ -19,7 +40,7 @@
 		}
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: Event) => {
 		e.preventDefault()
 
 		// no empty messages
@@ -62,24 +83,8 @@
 		on:submit={handleSubmit}
 		bind:this={formElem}
 	>
-		<label for="mail">
-			<span>Mail</span>
-			<input name="mail" type="email" placeholder="your@mail.com" bind:value={mail} />
-		</label>
-
-		<br />
-
-		<label for="message">
-			<span>Message</span>
-			<textarea
-				name="message"
-				id="msg"
-				placeholder="Put your message here..."
-				rows="5"
-				bind:value={message}
-			/>
-		</label>
-		<br />
+		<InputField label="E-Mail" bind:value={mail} />
+		<InputField label="Message" rows={5} bind:value={message} />
 
 		<div style="width: 100%; text-align: right;">
 			<button style="" type="submit">Submit!</button>
@@ -103,46 +108,29 @@
 		text-align: left;
 	}
 
-	label {
-		display: flex;
-		flex-direction: column;
-
-		span {
-			font-size: 1.3em;
-			text-decoration: underline;
-		}
-	}
-
-	input,
-	textarea {
-		font-family: unset;
-		margin-top: 0.25rem;
-		font-size: 1em;
-		text-decoration: none;
-		padding: 0.5rem;
-	}
-
 	button {
-		padding: 0.5rem 1rem;
+		padding: 0.75rem 1.5rem;
 
 		font-family: unset;
 		font-size: 1.3em;
 
 		background-color: $dark-color;
-		color: $accent-color;
+		color: white;
+
+		text-decoration-line: underline;
+		text-decoration-color: $accent-color;
+
 		border: 1px solid black;
 		border-radius: 6px;
 
 		transition: all 100ms linear;
 
-		&:hover {
+		&:hover,
+		&:focus {
 			cursor: pointer;
 			background-color: white;
 			color: $dark-color;
 			border-color: $dark-color;
-
-			text-decoration: underline;
-			text-decoration-color: $accent-color;
 		}
 	}
 
@@ -154,16 +142,17 @@
 	}
 
 	.status-indicator {
+		margin-top: 1rem;
 		width: 12px;
 		height: 12px;
 
 		border-radius: 100%;
 		border: 1px solid black;
 
-		background-color: red;
+		background-color: rgb(227, 55, 55);
 
 		&.success {
-			background-color: green;
+			background-color: rgb(43, 152, 43);
 		}
 	}
 </style>

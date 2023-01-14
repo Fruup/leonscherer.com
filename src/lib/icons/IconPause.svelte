@@ -1,5 +1,5 @@
 <script>
-	export let fill = "#171717";
+	export let fill = 'currentColor'
 </script>
 
 <svg viewBox="0 -5 51 63" {fill} {...$$props} xmlns="http://www.w3.org/2000/svg">

@@ -8,16 +8,7 @@
 	const transitionConfig: TransitionConfig = { delay: 0, duration: 50 }
 </script>
 
-<button
-	class="playback center-content"
-	on:click={togglePlayback}
-	on:keydown={(e) => {
-		if (e.key === ' ') {
-			e.preventDefault()
-			e.stopPropagation()
-		}
-	}}
->
+<button class="playback center-content" on:click={togglePlayback}>
 	{#if $audioStore.playing}
 		<div class="icon-container" transition:fade={transitionConfig}>
 			<IconPause />

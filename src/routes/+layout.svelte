@@ -6,6 +6,7 @@
 	import type { LayoutData } from './$types'
 	import '$lib/styles/fonts.sass'
 	import '$lib/styles/app.sass'
+	import Sidebar from '$lib/components/Sidebar.svelte'
 
 	export let data: LayoutData
 	const { trackMeta } = data
@@ -26,10 +27,7 @@
 
 				return {
 					...t,
-					//coverUrl: t.coverApproved ? (t.coverUrl || `${url}/${t.id}.jpg`) : `${url}/default.jpg`,
-					// coverUrl: t.coverUrl || `${MUSIC_CONTENT_URL}/webp/${t.id}.webp`,
 					coverUrl: t.coverApproved ? t.coverUrl || url : defaultCoverURL,
-					// coverUrl: t.coverUrl || url,
 				} as TrackMeta
 			}),
 		)
@@ -49,6 +47,7 @@
 </script>
 
 <Header />
+<Sidebar />
 
 <main class="page-container">
 	<slot />
