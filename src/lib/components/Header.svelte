@@ -81,8 +81,8 @@
 
 		box-sizing: content-box;
 		padding: 0.5em;
-		width: 1.75em;
-		height: 1.75em;
+		width: 2em;
+		height: 2em;
 		background: $dark-color;
 
 		border-top-left-radius: 8px;
