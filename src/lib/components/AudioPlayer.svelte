@@ -2,11 +2,11 @@
 	import { audioStore, getCurrentTrack } from '$lib/audio'
 	import { fade } from 'svelte/transition'
 	import PlaybackSlider from '$lib/components/PlaybackSlider.svelte'
-	import type { TrackMeta } from '$lib/helpers/types'
 	import { onMount } from 'svelte'
 	import PlaybackButton from './PlaybackButton.svelte'
 	import IconPlay from '$lib/icons/IconPlay.svelte'
 	import arrowUp from '$lib/assets/arrow-up.svg'
+	import type { Track } from '$lib/api/types'
 
 	// functions
 	onMount(() => {
@@ -26,17 +26,16 @@
 	export let ready = false
 	export let hidden = true
 
-	export let currentTrack: Partial<TrackMeta> | undefined = undefined
+	export let currentTrack: Partial<Track> | undefined = undefined
 
 	// computed
-	$: showCoverArtist =
-		currentTrack?.coverApproved && currentTrack?.coverArtist && currentTrack?.coverArtistUrl
+	$: showCoverArtist = currentTrack?.coverArtist && currentTrack?.coverArtist?.url
 </script>
 
 <footer
 	on:mouseenter={() => hidden && (hidden = false)}
 	on:click={() => hidden && (hidden = false)}
-	on:keydown={() => hidden && (hidden = false)}
+	on:keydown|self={() => hidden && (hidden = false)}
 	class:hidden
 	class:ready
 >
@@ -85,11 +84,11 @@
 										<span class="artist">
 											<i>
 												Cover art by <a
-													href={currentTrack.coverArtistUrl}
+													href={currentTrack.coverArtist?.url}
 													target="_blank"
 													rel="noreferrer"
 												>
-													{currentTrack.coverArtist}
+													{currentTrack.coverArtist?.name}
 												</a>
 											</i>
 										</span>

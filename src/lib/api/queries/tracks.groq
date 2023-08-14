@@ -1,0 +1,23 @@
+*[
+  _type == "track" &&
+  (
+    !defined(release) ||
+    dateTime(now()) > dateTime(release)
+  )
+] | order(release asc)
+{
+	"id": _id,
+  title,
+
+	// Cover
+	coverApproved => {
+		"coverUrl": cover.asset->url,
+		"coverDimensions": cover.asset->metadata.dimensions,
+		coverArtist->,
+	},
+
+	// File
+	"fileUrl": file.asset->url,
+	// "fileMimeType": file.asset->mimeType,
+	// "fileSize": file.asset->size,
+} 

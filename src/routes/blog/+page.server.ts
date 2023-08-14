@@ -9,5 +9,3 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		posts,
 	}
 }
-
-export const prerender = true

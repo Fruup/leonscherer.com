@@ -25,5 +25,3 @@ export const GET: RequestHandler = async ({}) => {
 
 	return json(filteredPosts)
 }
-
-export const prerender = true

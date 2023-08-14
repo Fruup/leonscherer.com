@@ -1,13 +1,16 @@
 <script lang="ts">
 	import IconAudioPlaying from '$lib/assets/IconAudioPlaying.svelte'
 	import { setCurrentTrackById, audioStore } from '$lib/audio'
-	import type { TrackMeta } from '$lib/helpers/types'
+	import type { Track as TrackMeta } from '$lib/api/types'
 	import { fade } from 'svelte/transition'
 
 	// props
 	export let track: TrackMeta
 
-	$: currentTrackId = $audioStore.tracks[$audioStore.currentTrackIndex].id
+	const desiredTrackSize = 256
+	const coverUrl = track.coverUrl + `?w=${desiredTrackSize}&h=${desiredTrackSize}`
+
+	$: currentTrackId = $audioStore.tracks[$audioStore.currentTrackIndex]?.id as string | undefined
 </script>
 
 <div class="track">
@@ -18,8 +21,8 @@
 	{/if}
 
 	<div class="button-container">
-		<button on:click={() => setCurrentTrackById(track.id, true)}>
-			<img src={track.coverUrl} alt={`${track.title} cover image`} width="100%" />
+		<button type="button" on:click={() => setCurrentTrackById(track.id, true)}>
+			<img src={coverUrl} alt={`${track.title} cover image`} width="100%" />
 		</button>
 	</div>
 </div>

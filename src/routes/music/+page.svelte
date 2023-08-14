@@ -2,7 +2,21 @@
 	import Page from '$lib/components/Page.svelte'
 	import Track from '$lib/components/Track.svelte'
 	import { audioStore } from '$lib/audio'
-	import { fly } from 'svelte/transition'
+	import { fly, type FlyParams } from 'svelte/transition'
+	import { browser } from '$app/environment'
+	import { onMount } from 'svelte'
+
+	const computeTransitionArgs = (index: number): FlyParams => ({
+		duration: 200,
+		delay: (index * 1000) / $audioStore.tracks.length,
+		y: 20,
+	})
+
+	let mounted = false
+
+	onMount(() => {
+		mounted = true
+	})
 </script>
 
 <svelte:head>
@@ -12,11 +26,12 @@
 <Page>
 	<div class="track-list">
 		{#each $audioStore.tracks as track, i}
-			<article
-				transition:fly={{ duration: 200, delay: (i * 1000) / $audioStore.tracks.length, y: 20 }}
-			>
-				<Track {track} />
-			</article>
+			<!-- This is necessary for the transition to play on intro. -->
+			{#if !browser || mounted}
+				<article in:fly={computeTransitionArgs(i)}>
+					<Track {track} />
+				</article>
+			{/if}
 		{/each}
 	</div>
 </Page>

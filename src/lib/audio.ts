@@ -1,19 +1,19 @@
 import { browser } from '$app/environment'
 import { Howl } from 'howler'
 import { writable } from 'svelte/store'
-import type { TrackMeta } from './helpers/types'
+import type { Track } from './api/types'
 
 // --------------------------------------------------------------------
 // store
 
 // audio store type definition
 declare type AudioStore = {
-	tracks: TrackMeta[]
+	tracks: Track[]
 	queue: number[]
 	currentTrackIndex: number
 	playing: boolean
 	wasPlaying: boolean
-	seekInterval?: NodeJS.Timeout
+	seekInterval?: ReturnType<typeof setTimeout>
 	autoplay: boolean
 }
 
@@ -99,7 +99,7 @@ function getRandomQueue() {
 // --------------------------------------------------------------------
 // global functions
 
-export const initAudioEngine = (tracks: TrackMeta[], currentTrackIndex: number) => {
+export const initAudioEngine = (tracks: Track[], currentTrackIndex: number) => {
 	// set tracks
 	audioStoreData.tracks = tracks
 
@@ -118,20 +118,14 @@ export function getCurrentTrack(store?: AudioStore) {
 		return store.tracks[store.currentTrackIndex]
 }
 
-export function loadTrack(track: TrackMeta) {
+export function loadTrack(track: Track) {
 	return new Promise<void>(async (resolve, reject) => {
 		// unload
 		if (howlInstance) howlInstance.unload()
 
-		const allTrackUrls = import.meta.glob('$content/music/mp3/*.mp3', { as: 'url' })
-		const match = Object.entries(allTrackUrls).find(([filename]) => filename.includes(track.id))
-		if (!match) throw Error('Unable to find track with id: ' + track.id)
-
-		const url = await match[1]()
-
 		// create new howl instance
 		howlInstance = new Howl({
-			src: url,
+			src: track.fileUrl,
 			html5: true,
 			onload: () => resolve(),
 			onloaderror: (soundId, error) => reject(error),
