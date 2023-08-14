@@ -1,15 +1,26 @@
 import { browser } from '$app/environment'
-import type { MetaResponseBody } from '$lib/helpers/types'
-import type { LayoutLoad } from './$types'
+import type { Track } from '$lib/api/types'
+import { initAudioEngine } from '$lib/audio.js'
 
-export const load: LayoutLoad = async ({ fetch }) => {
+export const load = async ({ data }) => {
 	if (!browser) return
 
-	// load track meta data
-	const response = await fetch('/music/meta')
-	const trackMeta: MetaResponseBody = await response.json()
+	localStorage.removeItem('lastBlogPost')
 
-	return { trackMeta }
+	const defaultCoverURL = (await import('$lib/assets/default.svg?url')).default
+
+	// get load track cover URLs
+	const tracks = data.tracks.map<Track>((track) => ({
+		...track,
+		coverUrl: track.coverUrl ?? defaultCoverURL,
+	}))
+
+	// read current track index from storage
+	const storedTrackIndex = localStorage.getItem('currentTrackIndex')
+	const currentTrackIndex = storedTrackIndex ? parseInt(storedTrackIndex) : tracks.length - 1
+
+	// init audio manager
+	initAudioEngine(tracks, currentTrackIndex)
+
+	return { tracks }
 }
-
-export const prerender = true

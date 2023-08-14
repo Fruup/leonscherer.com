@@ -1,0 +1,9 @@
+*[
+	_type == 'blog-post' &&
+	slug == :slug
+]{
+	"id": _id,
+	title,
+	release,
+	body,
+}

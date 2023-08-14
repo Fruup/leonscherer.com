@@ -27,4 +27,4 @@ export const load: PageLoad = async ({ params }) => {
 	}
 }
 
-export const prerender = true
+// export const prerender = true
