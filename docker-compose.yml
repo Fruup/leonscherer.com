@@ -1,0 +1,20 @@
+name: leonscherer-com
+version: "3.8"
+services:
+  sanity:
+    image: oven/bun
+    working_dir: /app
+    command: ./dev.sh
+    ports:
+      - 3333:3333
+    volumes:
+      - ./cms/:/app/
+
+  app:
+    image: oven/bun
+    working_dir: /app
+    command: ./dev.sh
+    ports:
+      - 4426:4426
+    volumes:
+      - ./:/app/
