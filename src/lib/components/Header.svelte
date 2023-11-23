@@ -13,8 +13,8 @@
 	$: blogUrl = $page.url.pathname.startsWith('/blog')
 		? '/blog'
 		: typeof localStorage !== 'undefined'
-		? localStorage.getItem('lastBlogPost') || '/blog'
-		: '/blog'
+		  ? localStorage.getItem('lastBlogPost') || '/blog'
+		  : '/blog'
 </script>
 
 <header>
@@ -34,9 +34,9 @@
 		</div>
 
 		<div class="social">
-			<SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} />
-			<SocialLink href="https://instagram.com/leonmaj7" icon={IconInstagram} />
-			<SocialLink href="https://github.com/Fruup" icon={IconGitHub} />
+			<Link href="https://twitter.com/leon_stuff" circular filled><IconTwitter /></Link>
+			<Link href="https://instagram.com/leonmaj7" circular filled><IconInstagram /></Link>
+			<Link href="https://github.com/Fruup" circular filled><IconGitHub /></Link>
 		</div>
 	</nav>
 </header>

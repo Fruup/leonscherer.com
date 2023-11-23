@@ -80,7 +80,8 @@
 					border-radius: 8px;
 				}
 
-				&:hover {
+				&:hover,
+				&:focus {
 					cursor: pointer;
 					img {
 						transform: scale(0.925);
