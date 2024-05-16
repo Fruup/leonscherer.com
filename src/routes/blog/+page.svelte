@@ -39,7 +39,7 @@
 		font-size: 1rem;
 
 		border: 1px solid black;
-		border-radius: 4px;
+		border-radius: 12px;
 
 		padding: 1rem;
 

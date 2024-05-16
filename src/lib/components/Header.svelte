@@ -13,8 +13,8 @@
 	$: blogUrl = $page.url.pathname.startsWith('/blog')
 		? '/blog'
 		: typeof localStorage !== 'undefined'
-		? localStorage.getItem('lastBlogPost') || '/blog'
-		: '/blog'
+			? localStorage.getItem('lastBlogPost') || '/blog'
+			: '/blog'
 </script>
 
 <header>
@@ -27,15 +27,16 @@
 	<nav>
 		<div class="pages">
 			<Link href="/music">Music</Link>
-			<Link href="/portfolio">Portfolio</Link>
+			<!-- <Link href="/portfolio">Portfolio</Link> -->
+			<!-- <Link href="/projects">Projects</Link> -->
 			<Link href={blogUrl}>Blog</Link>
 			<Link href="/about">About</Link>
 			<Link href="/contact">Contact</Link>
 		</div>
 
 		<div class="social">
-			<SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} />
-			<SocialLink href="https://instagram.com/leonmaj7" icon={IconInstagram} />
+			<!-- <SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} /> -->
+			<!-- <SocialLink href="https://instagram.com/leonmaj7" icon={IconInstagram} /> -->
 			<SocialLink href="https://github.com/Fruup" icon={IconGitHub} />
 		</div>
 	</nav>
