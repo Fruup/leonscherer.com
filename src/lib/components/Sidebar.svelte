@@ -17,8 +17,8 @@
 	$: blogUrl = $page.url.pathname.startsWith('/blog')
 		? '/blog'
 		: typeof localStorage !== 'undefined'
-		? localStorage.getItem('lastBlogPost') || '/blog'
-		: '/blog'
+			? localStorage.getItem('lastBlogPost') || '/blog'
+			: '/blog'
 
 	afterNavigate(({ type }) => {
 		if (type !== 'link') return
@@ -42,9 +42,9 @@
 			</div>
 
 			<div class="social">
-				<SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} />
-				<SocialLink href="https://instagram.com/leonmaj7" icon={IconInstagram} />
-				<SocialLink href="https://github.com/Fruup" icon={IconGitHub} />
+				<SocialLink href="https://instagram.com/leonmaj7" iconOnly><IconInstagram /></SocialLink>
+				<SocialLink href="https://github.com/Fruup" iconOnly><IconGitHub /></SocialLink>
+				<SocialLink href="https://thesis.leonscherer.com/">Bachelor's thesis</SocialLink>
 			</div>
 		</nav>
 	</aside>
@@ -101,6 +101,7 @@
 	.social {
 		display: flex;
 		gap: 0.5rem;
+		flex-wrap: wrap;
 	}
 
 	.pages {

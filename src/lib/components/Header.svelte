@@ -36,8 +36,9 @@
 
 		<div class="social">
 			<!-- <SocialLink href="https://twitter.com/leon_stuff" icon={IconTwitter} /> -->
-			<!-- <SocialLink href="https://instagram.com/leonmaj7" icon={IconInstagram} /> -->
-			<SocialLink href="https://github.com/Fruup" icon={IconGitHub} />
+			<SocialLink href="https://instagram.com/leonmaj7" iconOnly><IconInstagram /></SocialLink>
+			<SocialLink href="https://github.com/Fruup" iconOnly><IconGitHub /></SocialLink>
+			<SocialLink href="https://thesis.leonscherer.com/">Bachelor's thesis</SocialLink>
 		</div>
 	</nav>
 </header>

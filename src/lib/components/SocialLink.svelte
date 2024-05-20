@@ -1,12 +1,10 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte'
-
 	export let href = '/'
-	export let icon: typeof SvelteComponent
+	export let iconOnly = false
 </script>
 
-<a {href} target="_blank" rel="noreferrer">
-	<svelte:component this={icon} />
+<a {href} class:iconOnly target="_blank" rel="noreferrer">
+	<slot />
 </a>
 
 <style lang="scss">
@@ -17,9 +15,16 @@
 		text-decoration: none;
 
 		color: white;
-		
-		width: var(--link-size);
+
 		height: var(--link-size);
+
+		padding-left: 1rem;
+		padding-right: 1rem;
+
+		&.iconOnly {
+			width: var(--link-size);
+			padding: 0;
+		}
 
 		background-color: $dark-color;
 
